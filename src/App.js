@@ -17,11 +17,8 @@ function App() {
         }
         getNotes()
     }, [isReload])
-    /*
-1. here there will be a function named handleSearch
-to handle search by query, and it will be passed as props to header
-  */
 
+    //SEARCH query by userName
     const handleSearch = async e => {
         e.preventDefault()
         const search = e.target.searchText.value
@@ -33,9 +30,14 @@ to handle search by query, and it will be passed as props to header
         }
     }
 
-    /*2. here there will be a function named handleDelete
-to delete a note, and it will be passed as props to NoteCard that will be triggered using delete button.
- */
+    //DELETE
+    const handleDelete = async _id => {
+        const url = `http://localhost:5000/note/${_id}`
+        const { data } = await axios.delete(url)
+        if (data.acknowledged) {
+            setIsReload(!isReload)
+        }
+    }
 
     /*
 3. there will be a function named handleUpdate
@@ -43,17 +45,14 @@ to delete a note, and it will be passed as props to NoteCard that will be trigge
    later it will be passed to Update modal using props.
  */
 
-    /*
-4.  there will be a function named handlePost
-to post data to backend, and it will be passed as props to InputFrom.
- */
-
+    //CREATE or POST
     const handlePost = async e => {
         e.preventDefault()
         const userName = e.target.userName.value
         const note = e.target.note.value
         const url = 'http://localhost:5000/note'
         const { data } = await axios.post(url, { userName, note })
+        e.target.reset()
         if (data.acknowledged) {
             setIsReload(!isReload)
         }
@@ -65,7 +64,7 @@ to post data to backend, and it will be passed as props to InputFrom.
             <InputForm handlePost={handlePost} />
             <div className="row row-cols-1 row-cols-md-3 g-4 m-2">
                 {notes.map(note => (
-                    <NoteCard key={note._id} note={note} />
+                    <NoteCard key={note._id} note={note} handleDelete={handleDelete} />
                 ))}
             </div>
         </div>

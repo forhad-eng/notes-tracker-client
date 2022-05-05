@@ -9,7 +9,7 @@ const customStyles = {
     width: '80px'
 }
 
-const NoteCard = ({ note }) => {
+const NoteCard = ({ note, handleDelete }) => {
     return (
         <div className="col mt-5" style={{ position: 'relative' }}>
             <div className="rounded h-100 color-060930 note-card">
@@ -22,7 +22,9 @@ const NoteCard = ({ note }) => {
                 </div>
                 <div className="card-footer d-flex justify-content-center">
                     <div>
-                        <button className="color-801336 btn btn-sm mx-2 ">delete</button>
+                        <button onClick={() => handleDelete(note._id)} className="color-801336 btn btn-sm mx-2 ">
+                            delete
+                        </button>
                     </div>
                     {/* <button>update</button> */}
                     <UpdateModal />
