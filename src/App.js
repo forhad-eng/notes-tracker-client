@@ -39,11 +39,18 @@ function App() {
         }
     }
 
-    /*
-3. there will be a function named handleUpdate
-    to update data, and it will be passed as props to NoteCard and 
-   later it will be passed to Update modal using props.
- */
+    //UPDATE or PUT
+    const handleUpdate = async (e, _id) => {
+        e.preventDefault()
+        const userName = e.target.userName.value
+        const note = e.target.note.value
+        const url = `http://localhost:5000/note/${_id}`
+        const { data } = await axios.put(url, { userName, note })
+        if (data.acknowledged) {
+            setIsReload(!isReload)
+            e.target.reset()
+        }
+    }
 
     //CREATE or POST
     const handlePost = async e => {
@@ -64,7 +71,7 @@ function App() {
             <InputForm handlePost={handlePost} />
             <div className="row row-cols-1 row-cols-md-3 g-4 m-2">
                 {notes.map(note => (
-                    <NoteCard key={note._id} note={note} handleDelete={handleDelete} />
+                    <NoteCard key={note._id} note={note} handleDelete={handleDelete} handleUpdate={handleUpdate} />
                 ))}
             </div>
         </div>

@@ -9,7 +9,7 @@ const customStyles = {
     width: '80px'
 }
 
-const NoteCard = ({ note, handleDelete }) => {
+const NoteCard = ({ note, handleDelete, handleUpdate }) => {
     return (
         <div className="col mt-5" style={{ position: 'relative' }}>
             <div className="rounded h-100 color-060930 note-card">
@@ -27,7 +27,7 @@ const NoteCard = ({ note, handleDelete }) => {
                         </button>
                     </div>
                     {/* <button>update</button> */}
-                    <UpdateModal />
+                    <UpdateModal _id={note._id} handleUpdate={handleUpdate} />
                 </div>
             </div>
         </div>
